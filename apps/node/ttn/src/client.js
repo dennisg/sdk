@@ -46,14 +46,16 @@ const Client = class Client extends EventEmitter {
           devEUI: parts[2]
         });
         break;
-      case 'up':
-        super.emit('uplink', {
-          devEUI: parts[2],
-          fields: payload.fields || { raw: payload.payload },
-          counter: payload.counter,
-          port: payload.port,
-          metadata: payload.metadata[0]
-        });
+      case 'up'
+        for (var i=0;i<payload.metadata.length;i++) {
+            super.emit('uplink', {
+              devEUI: parts[2],
+              fields: payload.fields || { raw: payload.payload },
+              counter: payload.counter,
+              port: payload.port,
+             metadata: payload.metadata[i]
+            });
+        }
         break;
     }
   }
